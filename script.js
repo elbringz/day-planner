@@ -18,12 +18,27 @@ $(function () {
       localStorage.setItem(key, content);
     })
   }
+
     //
     // TODO: Add code to apply the past, present, or future class to each time
     // block by comparing the id to the current hour. HINTS: How can the id
     // attribute of each time-block be used to conditionally add or remove the
     // past, present, and future classes? How can Day.js be used to get the
     // current hour in 24-hour time?
+    function setColor() {
+      $('.time-block').each(function() {
+        var itemHour = parseInt(this.id);
+        const itemElement = $(this);
+        if (itemHour < hour) {
+          itemElement.removeClass('future present').addClass('past');
+        } else if (itemHour === hour) {
+          itemElement.removeClass('past future').addClass('present');
+        } else {
+          itemElement.removeClass('past present').addClass('future')
+        }
+
+      });
+    }
     //
     // TODO: Add code to get any user input that was saved in localStorage and set
     // the values of the corresponding textarea elements. HINT: How can the id
