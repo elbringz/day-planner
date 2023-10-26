@@ -13,8 +13,8 @@ $(function () {
     // useful when saving the description in local storage?
     function saveMessage() {
     saveBtn.on('click', function() {
-      var key = $(this).parent().attr('id');
-      var content = $(this).siblings('.description').val();
+      const key = $(this).parent().attr('id');
+      const content = $(this).siblings('.description').val();
       localStorage.setItem(key, content);
     })
   }
@@ -44,6 +44,11 @@ $(function () {
     // the values of the corresponding textarea elements. HINT: How can the id
     // attribute of each time-block be used to do this?
     //
+    $('.time-block').each(function() {
+      const key = $(this).attr('id');
+      const content = localStorage.getItem(key);
+      $(this).children('.description').val(value);
+    })
     // TODO: Add code to display the current date in the header of the page.
     $('#currentDay').text('Today is ' + today);
   });
