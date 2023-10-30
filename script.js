@@ -1,6 +1,9 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
+// Set variables for the current day, the save button, and the current hour.
+
 var today = dayjs().format('MMMM DD, YYYY');
 var saveBtn = $('.saveBtn');
 var hour = dayjs().hour();
@@ -12,6 +15,9 @@ $(function () {
     // function? How can DOM traversal be used to get the "hour-x" id of the
     // time-block containing the button that was clicked? How might the id be
     // useful when saving the description in local storage?
+
+// Function that saves the text for each time block to local storage when the save button is clicked
+
     function saveMessage() {
     saveBtn.on('click', function() {
       const key = $(this).parent().attr('id');
@@ -27,12 +33,13 @@ $(function () {
     // past, present, and future classes? How can Day.js be used to get the
     // current hour in 24-hour time?
 
-    
+// Function that uses a for loop to cycle through each time block and change the class based on the current hour.
 
     function setColor() {
-      $('.time-block').each(function() {
-        var itemHour = parseInt(this.id);
-        const itemElement = $(this);
+      const timeBlocks = $('.time-block');
+      for (let i = 0; i < timeBlocks.length; i++) {
+        const itemElement = $(timeBlocks[i]);
+        var itemHour = parseInt(timeBlocks[i].id);
         if (itemHour < hour) {
           itemElement.removeClass('future present').addClass('past');
         } else if (itemHour === hour) {
@@ -40,25 +47,8 @@ $(function () {
         } else {
           itemElement.removeClass('past present').addClass('future');
         }
-
-      });
+      }
     }
-    function hourColor() {
-    
-      $('.time-block').each(function() {
-        itemHour = parseInt(this.id);
-        var classes = {
-          past: itemHour < hour,
-          present: itemHour === hour,
-          future: itemHour > hour,
-        };
-        $(this).toggleClass(classes);
-      });
-    }
-   
-    
-    
-    
     
     
     //
@@ -66,16 +56,23 @@ $(function () {
     // the values of the corresponding textarea elements. HINT: How can the id
     // attribute of each time-block be used to do this?
     //
+
+    // Function that sets the value of the timeblocks from local storage.
+
     $('.time-block').each(function() {
       const key = $(this).attr('id');
       const content = localStorage.getItem(key);
       $(this).children('.description').val(content);
     });
     // TODO: Add code to display the current date in the header of the page.
+
+    // Displays current date in the header.
     $('#currentDay').text('Today is ' + today);
 
+
+    // Calls functions.
     saveMessage();
-    setColor(console.log);
-    hourColor(console.log);
+    setColor();
+    
 
   });
