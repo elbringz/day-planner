@@ -3,7 +3,8 @@
 // in the html.
 var today = dayjs().format('MMMM DD, YYYY');
 var saveBtn = $('.saveBtn');
-var hour = dayjs().format('H');
+var hour = dayjs().hour();
+
 $(function () {
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
@@ -25,6 +26,9 @@ $(function () {
     // attribute of each time-block be used to conditionally add or remove the
     // past, present, and future classes? How can Day.js be used to get the
     // current hour in 24-hour time?
+
+    
+
     function setColor() {
       $('.time-block').each(function() {
         var itemHour = parseInt(this.id);
@@ -34,11 +38,29 @@ $(function () {
         } else if (itemHour === hour) {
           itemElement.removeClass('past future').addClass('present');
         } else {
-          itemElement.removeClass('past present').addClass('future')
+          itemElement.removeClass('past present').addClass('future');
         }
 
       });
     }
+    function hourColor() {
+    
+      $('.time-block').each(function() {
+        itemHour = parseInt(this.id);
+        var classes = {
+          past: itemHour < hour,
+          present: itemHour === hour,
+          future: itemHour > hour,
+        };
+        $(this).toggleClass(classes);
+      });
+    }
+   
+    
+    
+    
+    
+    
     //
     // TODO: Add code to get any user input that was saved in localStorage and set
     // the values of the corresponding textarea elements. HINT: How can the id
@@ -47,8 +69,13 @@ $(function () {
     $('.time-block').each(function() {
       const key = $(this).attr('id');
       const content = localStorage.getItem(key);
-      $(this).children('.description').val(value);
-    })
+      $(this).children('.description').val(content);
+    });
     // TODO: Add code to display the current date in the header of the page.
     $('#currentDay').text('Today is ' + today);
+
+    saveMessage();
+    setColor(console.log);
+    hourColor(console.log);
+
   });
