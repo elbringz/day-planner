@@ -37,7 +37,7 @@ $(function () {
 
     function setColor() {
       const timeBlocks = $('.time-block');
-      for (let i = 0; i < timeBlocks.length; i++) {
+      for (var i = 0; i < timeBlocks.length; i++) {
         const itemElement = $(timeBlocks[i]);
         var itemHour = parseInt(timeBlocks[i].id);
         if (itemHour < hour) {
